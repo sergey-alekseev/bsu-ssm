@@ -9,3 +9,5 @@ Consider the following options for refactoring:
 +  use blocks to generate and display array
 +  apply code style guide
 +  remove superfluous methods invocations
+
+If you need some theory - feel free to [download it from bsu.by](http://www.bsu.by/Cache/pdf/381983.pdf).
