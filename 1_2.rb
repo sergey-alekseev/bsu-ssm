@@ -13,9 +13,25 @@ p a = mkm(7 **  6)
 
 
 # Матожидание
-def m(a)
-  a.inject(:+) / N
+#def m(a)
+#  # a.inject(:+).to_f / N #=> 0.5124927975721657
+#  # a.inject { |m, i| m+= i.to_f } / N #=> 0.5124927975721657
+#  # a.inject { |m, i| m+= i/N } #=> 0.9573990619699476
+#   a.inject { |m, i| m += i.to_f/N } #=> 0.9573990619699476
+#end
+
+
+# Матожидание without inject
+def expval(a) 
+  expval = 0  
+  a.each do |i|
+    expval += i.to_f 
+  end 
+  expval / N
 end
+
+p "Expectation value is : #{expval(a)}" #=> 0.5124927975721657
+
 
 # Тест «совпадения моментов»
 
