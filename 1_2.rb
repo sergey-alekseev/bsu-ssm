@@ -14,10 +14,7 @@ p a = mkm(7 **  6)
 
 # Матожидание
 def m(a)
-  # a.inject(:+) / N #=> 0.5124927975721657
-  # a.inject { |m, i| m+= i.to_f } / N #=> 0.5124927975721657
-  # a.inject { |m, i| m+= i/N } #=> 0.9573990619699476
-    a.inject { |m, i| m += i.to_f/N } #=> 0.9573990619699476 :)
+   a.reduce(:+) / N #=> 0.5124927975721657
 end
 
 # Тест «совпадения моментов»
@@ -27,7 +24,7 @@ D = 1.0 / 12
 
 m = m(a)
 ksi1 = m - mu
-s2 = a.map { |ai| (ai - m) ** 2 }.inject(:+) / (N - 1)
+s2 = a.map { |ai| (ai - m) ** 2 }.reduce(:+) / (N - 1)
 ksi2 = s2 - D
 
 puts "ksi1: #{ksi1}, ksi2: #{ksi2}"
@@ -69,7 +66,7 @@ def r(j)
 end
 def r_(j, a, n = N)
   m = m(a)
-  ( 1.0 / (n - j - 1)) * (0..n - j - 1).map { |i| a[i] * a[i+j] }.inject(:+) - (n.to_f / (n - 1)) * m ** 2
+  ( 1.0 / (n - j - 1)) * (0..n - j - 1).map { |i| a[i] * a[i+j] }.reduce(:+) - (n.to_f / (n - 1)) * m ** 2
 end
 def c(j)
   j >= 1 ? 1 : Math.sqrt(2)
