@@ -1,6 +1,6 @@
-# мультипликативного конгруэнтного метода (МКМ)
-M = 2 ** 31
-N = 1000
+# encoding: utf-8
+require 'modules.rb'
+include MathFunc
 
 def mkm(a0, b = a0, n = N)
   a = [a0]
@@ -8,14 +8,7 @@ def mkm(a0, b = a0, n = N)
   a[1..n].map { |a| a / M.to_f }
 end
 
-p a = mkm(7 **  6)
-# p a = mkm(5 ** 7, 5 ** 5, N)
-
-
-# Матожидание
-def m(a)
-  a.inject(:+) / N
-end
+p a = mkm(7 ** 6)
 
 # Тест «совпадения моментов»
 
@@ -36,10 +29,8 @@ def c2(n = N)
   ((n - 1).to_f / n) * (0.0056 * n ** -1 + 0.0028 * n ** -2 - 0.0083 * n ** -3) ** -0.5
 end
 
-delta = 1.96039491
-
-puts c1 * ksi1.abs < delta ? "H0: mu = 0.5" : "H1: mu != 0.5"
-puts c2 * ksi2.abs < delta ? "H0: D = 1/12" : "H1: D != 1/12"
+puts c1 * ksi1.abs < DELTA ? "H0: mu = 0.5" : "H1: mu != 0.5"
+puts c2 * ksi2.abs < DELTA ? "H0: D = 1/12" : "H1: D != 1/12"
 
 # Метод Макларена-Марсальи
 K = 32
@@ -73,5 +64,5 @@ def c(j)
 end
 
 (0..25).each do |j|
-  puts (r_(j, a) - r(j)).abs < (c(j) * delta) / (12 * Math.sqrt(N-1)) ? "H0" : "H1"
+  puts (r_(j, a) - r(j)).abs < (c(j) * DELTA) / (12 * Math.sqrt(N-1)) ? "H0" : "H1"
 end

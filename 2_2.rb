@@ -1,9 +1,6 @@
 # encoding: utf-8
-N = 1000
-# Матожидание
-def m(a)
-  a.inject(:+).to_f / N
-end
+require 'modules.rb'
+include MathFunc
 
 # Бернулли
 def bernulli(p)

@@ -1,12 +1,10 @@
 # encoding: utf-8
-N = 1000
-# Матожидание
-def me(a)
-  a.reduce(:+) / a.size
-end
+require 'modules.rb'
+include MathFunc
+
 # Проверка
 def check(a, mu, d)
-  m = me(a)
+  m = m(a)
   ksi1 = m - mu
   s2 = a.map { |ai| (ai - m) ** 2 }.reduce(:+).to_f / (a.size - 1)
   ksi2 = s2 - d
@@ -55,8 +53,6 @@ p "Стьюдента, m=#{m}: #{a}"
 puts "Стьюдента, m=#{m} проверка: #{check(a, mu2, d2)}"
 
 # из смеси двух распределений
-Pi = 0.3
 
-a = (1..N).map { rand < 1 - Pi ? standard(standard_normal, mu1, d1) : standard(standard_normal, mu2, d2) }
+a = (1..N).map { rand < 1 - PI ? standard(standard_normal, mu1, d1) : standard(standard_normal, mu2, d2) }
 p "Cмеси: #{a}"
-# puts "\nCмеси проверка: #{check(a, mu2, d2)}"
