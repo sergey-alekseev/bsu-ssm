@@ -1,9 +1,8 @@
+require './math.rb'
+include Math
+
 # encoding: utf-8
 N = 1000
-# Матожидание
-def m(a)
-  a.inject(:+).to_f / N
-end
 
 # Бернулли
 def bernulli(p)
@@ -12,12 +11,12 @@ end
 
 p = 0.7
 a = (0...N).to_a.map { bernulli(p) }
-p "Бернулли: #{a}"
+p "Bernoulli: #{a}"
 
 # Проверка
 mu = p
 d = p * (1-p)
-m = m(a)
+m = E(a)
 ksi1 = m - mu
 s2 = a.map { |ai| (ai - m) ** 2 }.inject(:+) / (N - 1)
 ksi2 = s2 - d
@@ -36,12 +35,12 @@ end
 
 m, p = 5, 0.25
 a = (0...N).to_a.map { binomial(m, p) }
-p "Биномиальное: #{a}"
+p "Binomial: #{a}"
 
 # Проверка
 mu = m * p
 d = m * p * (1-p)
-m = m(a)
+m = E(a)
 ksi1 = m - mu
 s2 = a.map { |ai| (ai - m) ** 2 }.inject(:+) / (N - 1)
 ksi2 = s2 - d
@@ -70,5 +69,5 @@ p "Markov Pi: #{count( (0...T).to_a.map { markov(Pi) } )}"
 
 a = [ markov(Pi) ]
 (1...T).each { |i| a << markov(P[S.index(a[i-1])]) }
-puts "Вывести средние доли нулей, единиц и двоек в n смоделированных последовательностях."
+#puts "Вывести средние доли нулей, единиц и двоек в n смоделированных последовательностях."
 p count(a)

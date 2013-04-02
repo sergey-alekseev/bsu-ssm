@@ -1,12 +1,12 @@
+require './math.rb'
+include Math
+
 # encoding: utf-8
 N = 1000
-# Матожидание
-def me(a)
-  a.reduce(:+) / a.size
-end
+
 # Проверка
 def check(a, mu, d)
-  m = me(a)
+  m = E(a)
   ksi1 = m - mu
   s2 = a.map { |ai| (ai - m) ** 2 }.reduce(:+).to_f / (a.size - 1)
   ksi2 = s2 - d
@@ -26,7 +26,7 @@ def standard(normal, m, s2)
 end
 a = (1..N).map { standard(standard_normal, m, s2) }
 p "N(#{m}, #{s2}): #{a}"
-puts "N(#{m}, #{s2}) проверка: #{check(a, m, s2)}"
+puts "N(#{m}, #{s2}) check: #{check(a, m, s2)}"
 
 # χ 2 (m)
 def xi2(m)
@@ -39,7 +39,7 @@ d1 = 2*m
 
 a = (1..N).map { xi2(m) }
 p "Xi^2, m=#{m}: #{a}"
-puts "Xi^2, m=#{m} проверка: #{check(a, mu1, d1)}"
+puts "Xi^2, m=#{m} check: #{check(a, mu1, d1)}"
 
 # Стьюдента (t-распределение) t(m)
 m = 6
@@ -51,12 +51,12 @@ def student(m)
 end
 
 a = (1..N).map { student(m) }
-p "Стьюдента, m=#{m}: #{a}"
-puts "Стьюдента, m=#{m} проверка: #{check(a, mu2, d2)}"
+p "Student, m=#{m}: #{a}"
+puts "Student, m=#{m} check: #{check(a, mu2, d2)}"
 
 # из смеси двух распределений
 Pi = 0.3
 
 a = (1..N).map { rand < 1 - Pi ? standard(standard_normal, mu1, d1) : standard(standard_normal, mu2, d2) }
-p "Cмеси: #{a}"
+p "mix: #{a}"
 # puts "\nCмеси проверка: #{check(a, mu2, d2)}"
