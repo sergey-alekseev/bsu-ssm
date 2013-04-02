@@ -1,28 +1,25 @@
+require './math.rb'
+include Math
+
 # мультипликативного конгруэнтного метода (МКМ)
 M = 2 ** 31
 N = 1000
 
 def mkm(a0, b = a0, n = N)
   a = [a0]
-  (1..n).each { |i| a[i] = (b * a[i-1]).modulo(M) }
+  (1..n).each { |i| a[i] = (b * a[i-1]).modulo(M) } 
   a[1..n].map { |a| a / M.to_f }
 end
 
 p a = mkm(7 **  6)
 # p a = mkm(5 ** 7, 5 ** 5, N)
 
-
-# Матожидание
-def m(a)
-  a.inject(:+) / N
-end
-
 # Тест «совпадения моментов»
 
 mu = 0.5
 D = 1.0 / 12
 
-m = m(a)
+m = E(a)
 ksi1 = m - mu
 s2 = a.map { |ai| (ai - m) ** 2 }.inject(:+) / (N - 1)
 ksi2 = s2 - D
@@ -65,7 +62,7 @@ def r(j)
   j >= 1 ? 0 : 1.0 / 12
 end
 def r_(j, a, n = N)
-  m = m(a)
+  m = E(a)
   ( 1.0 / (n - j - 1)) * (0..n - j - 1).map { |i| a[i] * a[i+j] }.inject(:+) - (n.to_f / (n - 1)) * m ** 2
 end
 def c(j)
