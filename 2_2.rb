@@ -12,14 +12,7 @@ a = (0...N).to_a.map { bernulli(p) }
 p "Бернулли: #{a}"
 
 # Проверка
-mu = p
-d = p * (1-p)
-m = m(a)
-ksi1 = m - mu
-s2 = a.map { |ai| (ai - m) ** 2 }.inject(:+) / (N - 1)
-ksi2 = s2 - d
-
-puts "ksi1: #{ksi1}, ksi2: #{ksi2}"
+puts check(a, p, d = p * (1 - p))
 
 # Биномиальное
 def binomial(m, p)
@@ -36,14 +29,7 @@ a = (0...N).to_a.map { binomial(m, p) }
 p "Биномиальное: #{a}"
 
 # Проверка
-mu = m * p
-d = m * p * (1-p)
-m = m(a)
-ksi1 = m - mu
-s2 = a.map { |ai| (ai - m) ** 2 }.inject(:+) / (N - 1)
-ksi2 = s2 - d
-
-puts "ksi1: #{ksi1}, ksi2: #{ksi2}"
+puts check(a, mu = m * p, d = m * p * (1 - p))
 
 # Однородная цепь Маркова
 S = [ 0, 1, 2 ]
@@ -54,7 +40,7 @@ P = [ [ 0.1, 0.2, 0.7 ], [ 0.3, 0.4, 0.3 ], [ 0.6, 0.2, 0.2 ] ]
 def markov(p)
   q = [ 0, p[0], p[0..1].inject(:+), p[0..2].inject(:+) ]
   a = rand()
-  (1..3).each { |i| return S[i-1] if (q[i-1]...q[i]).member?(a) }
+  (1..3).each { |i| return S[i - 1] if (q[i - 1]...q[i]).member?(a) }
 end
 
 def count(a)
@@ -66,6 +52,6 @@ end
 p "Markov Pi: #{count( (0...T).to_a.map { markov(Pi) } )}"
 
 a = [ markov(Pi) ]
-(1...T).each { |i| a << markov(P[S.index(a[i-1])]) }
+(1...T).each { |i| a << markov(P[S.index(a[i - 1])]) }
 puts "Вывести средние доли нулей, единиц и двоек в n смоделированных последовательностях."
 p count(a)
